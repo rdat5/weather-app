@@ -42,9 +42,60 @@ body {
     grid-column: 1/ 2;
     grid-row: 2 / 3;
     background-color: var(--sidebar-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar-wrap {
+    background-color: red;
+    width: 100%;
+}
+.city-name {
+    font-size: xx-large;
+    margin: 0.5rem;
+}
+.search-form-wrap
+{
+    background-color: green;
+}
+.city-search-input {
+    width: 100%;
 }
 .page-main {
     background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-wrap {
+    display: flex;
+    flex-direction: column;
+    /* background-color: white; */
+}
+.temp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    align-items: center;
+}
+.temperature {
+    font-size: xx-large;
+    grid-row: 1 / -1;
+}
+.feels-like, .temp-low-high, .humidity {
+    font-size: small;
+}
+.weather {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+.weather-icon {
+    grid-row: 1 / -1;
+}
+.weather-main, .weather-description {
+    font-size: small;
 }
 .page-footer
 {
