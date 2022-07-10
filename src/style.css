@@ -68,9 +68,11 @@ body {
     align-items: center;
 }
 .main-wrap {
-    display: flex;
-    flex-direction: column;
-    /* background-color: white; */
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    background-color: white;
+    min-width: 80%;
+    min-height: 80%;
 }
 .temp {
     display: grid;
