@@ -56,7 +56,7 @@ function getWeatherIcon(iconCode) {
 }
 
 function updateAllElements(weatherData) {
-  console.log(weatherData);
+  // console.log(weatherData);
   temperatureElem.textContent = `${Math.round(weatherData.main.temp)}°F`;
   feelsLikeElem.textContent = `Feels like ${Math.round(weatherData.main.feels_like)}°F`;
   tempLowHighElem.textContent = `${Math.round(weatherData.main.temp_max)}°F / ${Math.round(weatherData.main.temp_min)}°F`;
@@ -66,7 +66,7 @@ function updateAllElements(weatherData) {
   weatherDescElem.textContent = `${weatherData.weather[0].description}`;
 }
 
-function fetchWeatherFromCity(lat, lon, units) {
+function fetchWeatherFromCoordinates(lat, lon, units) {
   fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`, { mode: 'cors' })
     .then((response) => response.json())
     .then((response) => {
@@ -77,4 +77,16 @@ function fetchWeatherFromCity(lat, lon, units) {
     });
 }
 
-fetchWeatherFromCity('51.50', '0.13', 'imperial');
+function getWeatherFromCityName(city) {
+  fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`, { mode: 'cors' })
+    .then((response) => response.json())
+    .then((response) => {
+      const cityData = response[0];
+      fetchWeatherFromCoordinates(cityData.lat, cityData.lon, 'imperial');
+    })
+    .catch((err) => {
+      console.log(`Error! ${err}`);
+    });
+}
+
+getWeatherFromCityName('Perth');
