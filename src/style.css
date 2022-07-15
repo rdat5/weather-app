@@ -95,6 +95,7 @@ body {
 }
 .weather-icon {
     grid-row: 1 / -1;
+    font-size: xx-large;
 }
 .weather-main, .weather-description {
     font-size: small;
@@ -108,7 +109,7 @@ body {
 @media (max-width: 600px) {
     .page-wrap {
         grid-template-columns: 100%;
-        grid-template-rows: min-content 1fr min-content min-content;
+        grid-template-rows: min-content min-content 1fr min-content;
     }
     .page-wrap > * {
         grid-column: 1 / -1 !important;
