@@ -1,4 +1,5 @@
 import './style.css';
+import { fromUnixTime, format } from 'date-fns';
 import API_KEY from './apikey';
 
 const temperatureElem = document.querySelector('.temperature');
@@ -58,7 +59,7 @@ function getWeatherIcon(iconCode) {
 }
 
 function updateAllWeatherElements(weatherData) {
-  const dateTime = new Date(weatherData.dt);
+  const dateTime = format(fromUnixTime(weatherData.dt), 'PPpp');
 
   temperatureElem.textContent = `${Math.round(weatherData.main.temp)}°F`;
   feelsLikeElem.textContent = `Feels like ${Math.round(weatherData.main.feels_like)}°F`;
@@ -67,7 +68,7 @@ function updateAllWeatherElements(weatherData) {
   weatherIconElem.textContent = getWeatherIcon(weatherData.weather[0].icon);
   weatherMainElem.textContent = `${weatherData.weather[0].main}`;
   weatherDescElem.textContent = `${weatherData.weather[0].description}`;
-  currentTimeElem.textContent = dateTime;
+  currentTimeElem.textContent = `As of ${dateTime}`;
 }
 
 function updateAllCityElements(cityData) {
