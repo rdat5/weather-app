@@ -8,6 +8,8 @@ const humidityElem = document.querySelector('.humidity');
 const weatherIconElem = document.querySelector('.weather-icon');
 const weatherMainElem = document.querySelector('.weather-main');
 const weatherDescElem = document.querySelector('.weather-description');
+const currentTimeElem = document.querySelector('.current-time');
+const cityNameElem = document.querySelector('.city-name');
 
 function getWeatherIcon(iconCode) {
   let weatherIcon;
@@ -55,8 +57,9 @@ function getWeatherIcon(iconCode) {
   return weatherIcon;
 }
 
-function updateAllElements(weatherData) {
-  // console.log(weatherData);
+function updateAllWeatherElements(weatherData) {
+  const dateTime = new Date(weatherData.dt);
+
   temperatureElem.textContent = `${Math.round(weatherData.main.temp)}°F`;
   feelsLikeElem.textContent = `Feels like ${Math.round(weatherData.main.feels_like)}°F`;
   tempLowHighElem.textContent = `${Math.round(weatherData.main.temp_max)}°F / ${Math.round(weatherData.main.temp_min)}°F`;
@@ -64,13 +67,18 @@ function updateAllElements(weatherData) {
   weatherIconElem.textContent = getWeatherIcon(weatherData.weather[0].icon);
   weatherMainElem.textContent = `${weatherData.weather[0].main}`;
   weatherDescElem.textContent = `${weatherData.weather[0].description}`;
+  currentTimeElem.textContent = dateTime;
+}
+
+function updateAllCityElements(cityData) {
+  cityNameElem.textContent = cityData.name;
 }
 
 function fetchWeatherFromCoordinates(lat, lon, units) {
   fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`, { mode: 'cors' })
     .then((response) => response.json())
     .then((response) => {
-      updateAllElements(response);
+      updateAllWeatherElements(response);
     })
     .catch((err) => {
       console.log(`Error! ${err}`);
@@ -82,6 +90,7 @@ function getWeatherFromCityName(city) {
     .then((response) => response.json())
     .then((response) => {
       const cityData = response[0];
+      updateAllCityElements(cityData);
       fetchWeatherFromCoordinates(cityData.lat, cityData.lon, 'imperial');
     })
     .catch((err) => {
@@ -89,4 +98,4 @@ function getWeatherFromCityName(city) {
     });
 }
 
-getWeatherFromCityName('Perth');
+getWeatherFromCityName('Las Vegas')
