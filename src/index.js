@@ -74,7 +74,7 @@ function updateAllWeatherElements(weatherData) {
 }
 
 function updateAllCityElements(cityData) {
-  cityNameElem.textContent = cityData.name;
+  cityNameElem.textContent = `${cityData.name}, ${cityData.state}`;
 }
 
 function fetchWeatherFromCoordinates(lat, lon, units) {
