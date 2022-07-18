@@ -2,6 +2,8 @@ import './style.css';
 import { fromUnixTime, format } from 'date-fns';
 import API_KEY from './apikey';
 
+const citySearchBox = document.querySelector('.city-search-input');
+const citySearchBtn = document.querySelector('.city-search-button');
 const temperatureElem = document.querySelector('.temperature');
 const feelsLikeElem = document.querySelector('.feels-like');
 const tempLowHighElem = document.querySelector('.temp-low-high');
@@ -99,4 +101,9 @@ function getWeatherFromCityName(city) {
     });
 }
 
-getWeatherFromCityName('Las Vegas')
+citySearchBtn.addEventListener('click', () => {
+  console.log(citySearchBox.value);
+  getWeatherFromCityName(citySearchBox.value);
+  citySearchBox.value = '';
+});
+getWeatherFromCityName('Las Vegas');
