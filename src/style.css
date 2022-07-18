@@ -1,13 +1,14 @@
 :root {
     --body-bg-color: #e4e4e4;
     --page-wrap-color: white;
-    --header-color: #ffcdd2;
-    --main-color: #dcedc8;
-    --sidebar-color: #e1bee7;
-    --footer-color: #ffecb3;
+    --header-color: #3c3c3c;
+    --main-color: #3c3c3c;
+    --sidebar-color: #3c3c3c;
+    --footer-color: #3c3c3c;
 }
 * {
     box-sizing: border-box;
+    color: white;
 }
 body {
     background-color: var(--body-bg-color);
@@ -47,7 +48,7 @@ body {
     align-items: center;
 }
 .sidebar-wrap {
-    background-color: red;
+    /* background-color: red; */
     width: 100%;
 }
 .city-name {
@@ -56,10 +57,19 @@ body {
 }
 .search-form-wrap
 {
-    background-color: green;
+    /* background-color: green; */
 }
 .city-search-input {
     width: 100%;
+    border-radius: 10000px;
+    padding: 0.5rem;
+    color: black;
+}
+.city-search-button {
+    background-color: transparent;
+    width: 100%;
+    border-radius: 10000px;
+    padding: 0.5rem 1rem;
 }
 .page-main {
     background-color: var(--main-color);
@@ -70,7 +80,7 @@ body {
 .main-wrap {
     display: grid;
     grid-template-rows: 1fr 1fr;
-    background-color: white;
+    /* background-color: white; */
     min-width: 80%;
     min-height: 80%;
 }
