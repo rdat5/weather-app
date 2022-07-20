@@ -43,7 +43,8 @@ body {
     grid-column: 1/ 2;
     grid-row: 2 / 3;
     background-color: var(--sidebar-color);
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr min-content;
     justify-content: center;
     align-items: center;
 }
@@ -83,6 +84,15 @@ body {
     /* background-color: white; */
     min-width: 80%;
     min-height: 80%;
+}
+.celcius-toggle-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.toggle {
+    height: 1.5rem;
+    width: 1.5rem;
 }
 .temp {
     display: grid;

@@ -4,6 +4,7 @@ import API_KEY from './apikey';
 
 const citySearchBox = document.querySelector('.city-search-input');
 const citySearchBtn = document.querySelector('.city-search-button');
+const cfToggle = document.querySelector('#cf-toggle');
 const temperatureElem = document.querySelector('.temperature');
 const feelsLikeElem = document.querySelector('.feels-like');
 const tempLowHighElem = document.querySelector('.temp-low-high');
@@ -13,6 +14,9 @@ const weatherMainElem = document.querySelector('.weather-main');
 const weatherDescElem = document.querySelector('.weather-description');
 const currentTimeElem = document.querySelector('.current-time');
 const cityNameElem = document.querySelector('.city-name');
+
+let isMetric = false;
+let currentCity = 'Las Vegas';
 
 function getWeatherIcon(iconCode) {
   let weatherIcon;
@@ -63,9 +67,19 @@ function getWeatherIcon(iconCode) {
 function updateAllWeatherElements(weatherData) {
   const dateTime = format(fromUnixTime(weatherData.dt), 'PPpp');
 
-  temperatureElem.textContent = `${Math.round(weatherData.main.temp)}°F`;
-  feelsLikeElem.textContent = `Feels like ${Math.round(weatherData.main.feels_like)}°F`;
-  tempLowHighElem.textContent = `${Math.round(weatherData.main.temp_max)}°F / ${Math.round(weatherData.main.temp_min)}°F`;
+  let degreeUnit;
+
+  if (isMetric) {
+    degreeUnit = 'C';
+  }
+  else
+  {
+    degreeUnit = 'F';
+  }
+
+  temperatureElem.textContent = `${Math.round(weatherData.main.temp)}°${degreeUnit}`;
+  feelsLikeElem.textContent = `Feels like ${Math.round(weatherData.main.feels_like)}°${degreeUnit}`;
+  tempLowHighElem.textContent = `${Math.round(weatherData.main.temp_max)}°${degreeUnit} / ${Math.round(weatherData.main.temp_min)}°${degreeUnit}`;
   humidityElem.textContent = `Humidity: ${weatherData.main.humidity}%`;
   weatherIconElem.textContent = getWeatherIcon(weatherData.weather[0].icon);
   weatherMainElem.textContent = `${weatherData.weather[0].main}`;
@@ -92,18 +106,35 @@ function getWeatherFromCityName(city) {
   fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`, { mode: 'cors' })
     .then((response) => response.json())
     .then((response) => {
+      let currentUnits;
+
+      if (isMetric) {
+        currentUnits = 'metric';
+      }
+      else
+      {
+        currentUnits = 'imperial';
+      }
+
       const cityData = response[0];
       updateAllCityElements(cityData);
-      fetchWeatherFromCoordinates(cityData.lat, cityData.lon, 'imperial');
+      fetchWeatherFromCoordinates(cityData.lat, cityData.lon, currentUnits);
     })
     .catch((err) => {
       console.log(`Error! ${err}`);
     });
 }
 
+cfToggle.addEventListener('input', () => {
+  // console.log(cfToggle.checked);
+  isMetric = cfToggle.checked;
+  getWeatherFromCityName(currentCity);
+});
+
 citySearchBtn.addEventListener('click', () => {
-  console.log(citySearchBox.value);
-  getWeatherFromCityName(citySearchBox.value);
+  // console.log(citySearchBox.value);
+  currentCity = citySearchBox.value;
+  getWeatherFromCityName(currentCity);
   citySearchBox.value = '';
 });
-getWeatherFromCityName('Las Vegas');
+getWeatherFromCityName(currentCity);
