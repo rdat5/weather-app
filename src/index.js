@@ -88,7 +88,19 @@ function updateAllWeatherElements(weatherData) {
 }
 
 function updateAllCityElements(cityData) {
-  cityNameElem.textContent = `${cityData.name}, ${cityData.state}`;
+  let cityName = cityData.name;
+  let cityState = '';
+  let cityCountry = cityData.country;
+
+  if (cityData.state) {
+    cityState = `, ${cityData.state}`;
+  }
+  else
+  {
+    cityState = '';
+  }
+
+  cityNameElem.textContent = `${cityName}${cityState}, ${cityCountry}`;
 }
 
 function fetchWeatherFromCoordinates(lat, lon, units) {
