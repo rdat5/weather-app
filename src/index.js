@@ -145,8 +145,7 @@ function getWeatherFromCityName(city) {
       fetchWeatherFromCoordinates(cityData.lat, cityData.lon, currentUnits);
     })
     .catch((err) => {
-      // console.log(`Error! ${err}`);
-      alert(`Error! ${err}`);
+      console.log(`Error! ${err}`);
     });
 }
 
