@@ -65,6 +65,17 @@ function getWeatherIcon(iconCode) {
   return weatherIcon;
 }
 
+function fetchNewGIF(searchTerm) {
+  fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${GIPHY_KEY}&s=${searchTerm}`, { mode: 'cors' })
+    .then((response) => response.json())
+    .then((response) => {
+      weatherVibeImgElem.src = response.data.images.original.url;
+    })
+    .catch((err) => {
+      console.log(`Error! ${err}`);
+    });
+}
+
 function updateAllWeatherElements(weatherData) {
   const dateTime = format(fromUnixTime(weatherData.dt), 'PPpp');
 
@@ -72,9 +83,7 @@ function updateAllWeatherElements(weatherData) {
 
   if (isMetric) {
     degreeUnit = 'C';
-  }
-  else
-  {
+  } else {
     degreeUnit = 'F';
   }
 
@@ -89,15 +98,13 @@ function updateAllWeatherElements(weatherData) {
 }
 
 function updateAllCityElements(cityData) {
-  let cityName = cityData.name;
+  const cityName = cityData.name;
   let cityState = '';
-  let cityCountry = cityData.country;
+  const cityCountry = cityData.country;
 
   if (cityData.state) {
     cityState = `, ${cityData.state}`;
-  }
-  else
-  {
+  } else {
     cityState = '';
   }
 
@@ -129,9 +136,7 @@ function getWeatherFromCityName(city) {
 
       if (isMetric) {
         currentUnits = 'metric';
-      }
-      else
-      {
+      } else {
         currentUnits = 'imperial';
       }
 
@@ -140,30 +145,17 @@ function getWeatherFromCityName(city) {
       fetchWeatherFromCoordinates(cityData.lat, cityData.lon, currentUnits);
     })
     .catch((err) => {
-      console.log(`Error! ${err}`);
+      // console.log(`Error! ${err}`);
+      alert(`Error! ${err}`);
     });
 }
 
-function fetchNewGIF(searchTerm) {
-  fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${GIPHY_KEY}&s=${searchTerm}`, { mode: 'cors' })
-    .then((response) => response.json())
-    .then((response) => {
-      console.log(response);
-      weatherVibeImgElem.src = response.data.images.original.url;
-    })
-    .catch((err) => {
-      console.log(`Error! ${err}`);
-    })
-}
-
 cfToggle.addEventListener('input', () => {
-  // console.log(cfToggle.checked);
   isMetric = cfToggle.checked;
   getWeatherFromCityName(currentCity);
 });
 
 citySearchBtn.addEventListener('click', () => {
-  // console.log(citySearchBox.value);
   currentCity = citySearchBox.value;
   getWeatherFromCityName(currentCity);
   citySearchBox.value = '';

@@ -49,16 +49,11 @@ body {
     align-items: center;
 }
 .sidebar-wrap {
-    /* background-color: red; */
     width: 100%;
 }
 .city-name {
     font-size: xx-large;
     margin: 0.5rem;
-}
-.search-form-wrap
-{
-    /* background-color: green; */
 }
 .city-search-input {
     width: 100%;
@@ -81,7 +76,6 @@ body {
 .main-wrap {
     display: grid;
     grid-template-rows: 1fr 1fr;
-    /* background-color: white; */
     min-width: 80%;
     min-height: 80%;
 }
@@ -114,7 +108,6 @@ body {
     grid-template-rows: 1fr 1fr;
 }
 .weather-icon {
-    /* grid-row: 1 / -1; */
     font-size: xx-large;
 }
 .weather-main, .weather-description {
