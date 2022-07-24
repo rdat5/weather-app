@@ -13,7 +13,7 @@
 body {
     background-color: var(--body-bg-color);
     padding: 5px;
-    height: 100vh;
+    max-height: 100vh;
     margin: 0;
 
     font: 500 100% system-ui, sans-serif;
@@ -114,11 +114,26 @@ body {
     grid-template-rows: 1fr 1fr;
 }
 .weather-icon {
-    grid-row: 1 / -1;
+    /* grid-row: 1 / -1; */
     font-size: xx-large;
 }
 .weather-main, .weather-description {
     font-size: small;
+}
+.weather-description {
+    grid-column: 2;
+}
+.weather-vibe-wrap {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+.weather-vibe {
+    max-height: 12rem;
+    border-radius: 8px;
 }
 .page-footer
 {

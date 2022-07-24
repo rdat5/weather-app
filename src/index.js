@@ -1,6 +1,6 @@
 import './style.css';
 import { fromUnixTime, format } from 'date-fns';
-import API_KEY from './apikey';
+import { API_KEY, GIPHY_KEY } from './apikey';
 
 const citySearchBox = document.querySelector('.city-search-input');
 const citySearchBtn = document.querySelector('.city-search-button');
@@ -14,6 +14,7 @@ const weatherMainElem = document.querySelector('.weather-main');
 const weatherDescElem = document.querySelector('.weather-description');
 const currentTimeElem = document.querySelector('.current-time');
 const cityNameElem = document.querySelector('.city-name');
+const weatherVibeImgElem = document.querySelector('.weather-vibe');
 
 let isMetric = false;
 let currentCity = 'Las Vegas';
@@ -103,11 +104,17 @@ function updateAllCityElements(cityData) {
   cityNameElem.textContent = `${cityName}${cityState}, ${cityCountry}`;
 }
 
+function updateVibe(weatherData) {
+  const vibeSearchTerm = weatherData.weather[0].main;
+  fetchNewGIF(vibeSearchTerm);
+}
+
 function fetchWeatherFromCoordinates(lat, lon, units) {
   fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`, { mode: 'cors' })
     .then((response) => response.json())
     .then((response) => {
       updateAllWeatherElements(response);
+      updateVibe(response);
     })
     .catch((err) => {
       console.log(`Error! ${err}`);
@@ -135,6 +142,18 @@ function getWeatherFromCityName(city) {
     .catch((err) => {
       console.log(`Error! ${err}`);
     });
+}
+
+function fetchNewGIF(searchTerm) {
+  fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${GIPHY_KEY}&s=${searchTerm}`, { mode: 'cors' })
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      weatherVibeImgElem.src = response.data.images.original.url;
+    })
+    .catch((err) => {
+      console.log(`Error! ${err}`);
+    })
 }
 
 cfToggle.addEventListener('input', () => {
